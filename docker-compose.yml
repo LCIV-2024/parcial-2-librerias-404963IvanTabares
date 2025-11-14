@@ -1,1 +1,18 @@
 # // TODO: Implementar el docker-compose
+version: '3.8'
+
+services:
+  libreria-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: libreria-service
+    ports:
+      - "8080:8080"
+    volumes:
+      - h2_data:/data
+    restart: unless-stopped
+
+volumes:
+  h2_data:
+    driver: local

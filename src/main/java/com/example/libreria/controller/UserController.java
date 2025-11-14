@@ -21,16 +21,20 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserRequestDTO requestDTO) {
        // TODO: Implementar la creación de un usuario
+
+        return new ResponseEntity<>(userService.createUser(requestDTO), HttpStatus.CREATED);
     }
     
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
         // TODO: Implementar la obtención de un usuario por su ID
+        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
     }
     
     @GetMapping
     public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
         //TODO: Implementar la obtención de todos los usuarios
+        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
     
     @PutMapping("/{id}")
@@ -38,11 +42,19 @@ public class UserController {
             @PathVariable Long id,
             @Valid @RequestBody UserRequestDTO requestDTO) {
         //TODO: Implementar la actualización de un usuario
+        return new ResponseEntity<>(userService.updateUser(id, requestDTO), HttpStatus.OK);
     }
     
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         //TODO: Implementar la eliminación de un usuario
+        try {
+            userService.deleteUser(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (Exception ex){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 }
 
